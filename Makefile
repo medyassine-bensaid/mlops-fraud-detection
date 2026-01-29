@@ -1,7 +1,7 @@
 .PHONY: setup download-data train test lint format deploy monitor clean help
 
 # Variables
-PYTHON := python3
+PYTHON := python
 PIP := pip3
 PYTEST := pytest
 BLACK := black
