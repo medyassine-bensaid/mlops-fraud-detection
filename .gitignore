@@ -51,7 +51,7 @@ data/processed/
 /dvc/.dvc/cache
 
 # Models
-models/
+
 *.joblib
 mlruns/
 mlflow.db
