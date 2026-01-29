@@ -15,7 +15,7 @@ mlflow==2.9.2               # last stable fully compatible with py3.9
 # =========================
 # Orchestration
 # =========================
-prefect==2.14.9             # OK for py3.9
+prefect==2.14.10             # OK for py3.9
 prefect-aws==0.4.8
 
 # =========================
