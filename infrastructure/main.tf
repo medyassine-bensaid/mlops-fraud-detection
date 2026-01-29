@@ -77,84 +77,11 @@ resource "aws_ecr_repository" "fraud_detection" {
   }
 }
 
-# IAM Role for Lambda
-resource "aws_iam_role" "lambda_role" {
-  name = "fraud-detection-lambda-role"
-
-  assume_role_policy = jsonencode({
-    Version = "2012-10-17"
-    Statement = [
-      {
-        Action = "sts:AssumeRole"
-        Effect = "Allow"
-        Principal = {
-          Service = "lambda.amazonaws.com"
-        }
-      }
-    ]
-  })
-  
-  tags = {
-    Name        = "Lambda Execution Role"
-    Environment = var.environment
-    Project     = "fraud-detection"
-  }
-}
-
-# IAM Policy for Lambda
-resource "aws_iam_role_policy" "lambda_policy" {
-  name = "fraud-detection-lambda-policy"
-  role = aws_iam_role.lambda_role.id
-
-  policy = jsonencode({
-    Version = "2012-10-17"
-    Statement = [
-      {
-        Effect = "Allow"
-        Action = [
-          "s3:GetObject",
-          "s3:PutObject",
-          "s3:ListBucket"
-        ]
-        Resource = [
-          "${aws_s3_bucket.data_bucket.arn}/*",
-          "${aws_s3_bucket.data_bucket.arn}",
-          "${aws_s3_bucket.model_bucket.arn}/*",
-          "${aws_s3_bucket.model_bucket.arn}"
-        ]
-      },
-      {
-        Effect = "Allow"
-        Action = [
-          "logs:CreateLogGroup",
-          "logs:CreateLogStream",
-          "logs:PutLogEvents"
-        ]
-        Resource = "arn:aws:logs:*:*:*"
-      },
-      {
-        Effect = "Allow"
-        Action = [
-          "ecr:GetDownloadUrlForLayer",
-          "ecr:BatchGetImage",
-          "ecr:BatchCheckLayerAvailability"
-        ]
-        Resource = aws_ecr_repository.fraud_detection.arn
-      }
-    ]
-  })
-}
-
-# Attach AWS managed policy for Lambda basic execution
-resource "aws_iam_role_policy_attachment" "lambda_basic_execution" {
-  role       = aws_iam_role.lambda_role.name
-  policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
-}
 
 # Lambda Function
 resource "aws_lambda_function" "fraud_detection" {
   function_name = "fraud-detection-api"
-  role          = aws_iam_role.lambda_role.arn
+  role          = "arn:aws:sts::549009464329:assumed-role/voclabs/user4433534=mohamedyassine.bensaid2@gmail.com"
   package_type  = "Image"
   image_uri     = "${aws_ecr_repository.fraud_detection.repository_url}:latest"
   timeout       = 60
