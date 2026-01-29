@@ -81,7 +81,7 @@ resource "aws_ecr_repository" "fraud_detection" {
 # Lambda Function
 resource "aws_lambda_function" "fraud_detection" {
   function_name = "fraud-detection-api"
-  role          = "arn:aws:sts::549009464329:assumed-role/voclabs/user4433534=mohamedyassine.bensaid2@gmail.com"
+  role          = var.existing_lambda_role_arn
   package_type  = "Image"
   image_uri     = "${aws_ecr_repository.fraud_detection.repository_url}:latest"
   timeout       = 60

@@ -76,3 +76,7 @@ variable "tags" {
   type        = map(string)
   default     = {}
 }
+variable "existing_lambda_role_arn" {
+  type        = string
+  description = ""arn:aws:sts::549009464329:assumed-role/voclabs/user4433534=mohamedyassine.bensaid2@gmail.com""
+}

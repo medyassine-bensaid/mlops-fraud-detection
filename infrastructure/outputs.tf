@@ -43,10 +43,12 @@ output "lambda_function_invoke_arn" {
   value       = aws_lambda_function.fraud_detection.invoke_arn
 }
 
+
 output "lambda_role_arn" {
-  description = "ARN of the Lambda IAM role"
-  value       = aws_iam_role.lambda_role.arn
+  value = var.existing_lambda_role_arn
+  description = "ARN of the IAM role used by the Lambda function"
 }
+
 
 output "api_gateway_id" {
   description = "ID of the API Gateway"
